@@ -21,33 +21,47 @@ on:
   workflow_dispatch:
   pull_request:
     paths-ignore:
-      - '**.md'
+      - "**.md"
   push:
     branches: [main]
 
 jobs:
-  build:
-    name: Validate Commit
-    runs-on: ubuntu-latest
-
+  commitlint:
+    name: Commit Lint
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: webiny/action-conventional-commits@v1.3.0
-      #- uses: apache/skywalking-eyes/header@main
 
-      - name: Install poetry
-        run: pipx install poetry
-
+  mypy:
+    needs: commitlint
+    name: MyPy Python linter
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
-          cache: 'poetry'
-      - run:
-          poetry install -q
-      - name: MyPy static check
-        run: |
-          poetry run mypy --config-file pyproject.toml .
-      - name: Ruff Linting
-        run: |
-          poetry install
-          poetry run ruff check --config pyproject.toml .
+          python-version: "3.10"
+      - name: Install mypy
+        run: pip install mypy
+      - name: Run mypy
+        uses: sasanquaneuf/mypy-github-action@releases/v1.3
+        with:
+          checkName: "mypy" # NOTE: this needs to be the same as the job name
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  ruff:
+    needs: commitlint
+    name: Ruff Python Linter
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ruff Check
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: "check --config pyproject.toml"
+      - name: Ruff Format
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: "format --check --config pyproject.toml"
