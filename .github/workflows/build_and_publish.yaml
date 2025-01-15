@@ -26,46 +26,44 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - 'v*'
+      - "v*"
     paths-ignore:
-      - '**.md'
+      - "**.md"
   pull_request:
     paths-ignore:
-      - '**.md'
+      - "**.md"
 
 jobs:
-    build_deploy:
-        name: Build and Deploy Python OrtHW
-        runs-on: ubuntu-latest
+  build_deploy:
+    name: Build and Deploy Python OrtHW
+    runs-on: ubuntu-24.04
 
-        steps:
-          - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-          - name: Install poetry
-            run: pipx install poetry
-          - uses: actions/setup-python@v5
-            with:
-              python-version: '3.10'
-              cache: 'poetry'
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
-          - name: Setup poetry project
-            run: |
-              poetry install -q
-              poetry build
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
 
-          - name: Check 📦 package
-            run: |
-              poetry run twine check dist/*
+      - name: Build 📦 package
+        run: |
+          uv build
+        shell: bash
 
-          - name: Upload artifacts
-            uses: actions/upload-artifact@v4
-            with:
-              name: build-artifacts
-              path: dist/*
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: dist/*
 
-          - name: Publish 📦 package
-            if: github.event_name == 'push'
-            env:
-              TWINE_USERNAME: ${{ secrets.TEST_PYPI_USER }}
-              TWINE_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
-            run: poetry run twine upload -r testpypi dist/*
+      - name: Publish Test 📦 package
+        if: github.event_name == 'push'
+        env:
+          UV_PUBLISH_USERNAME: ${{ secrets.TEST_PYPI_USER }}
+          UV_PUBLISH_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
+        run: |
+          uv publish --index testpypi dist/*
