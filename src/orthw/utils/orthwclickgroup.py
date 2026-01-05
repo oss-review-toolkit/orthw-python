@@ -21,7 +21,6 @@ from collections.abc import Callable
 from typing import Any, overload
 
 import click
-from click.core import _check_multicommand
 from rich.box import HORIZONTALS
 from rich.console import Console
 from rich.padding import Padding
@@ -31,12 +30,21 @@ from orthw import settings
 
 
 class OrtHwClickGroup(click.Group):
+    """Custom Click Group for ORTHW CLI.
+
+    This class extends the Click `Group` to provide customized behavior for the ORTHW command-line interface.
+    It customizes the formatting of usage and options output, supports command and group registration with
+    additional context, and manages command aliases. The class also integrates with the application's settings
+    to display configuration information in the CLI help output.
+    """
+
     def format_usage(self, ctx: click.Context, formatter: click.HelpFormatter) -> None:
-        """Customization of usage output from Click
+        """Customize usage output from Click.
 
         Args:
             ctx (click.Context): Click main context
             formatter (click.HelpFormatter): The help formatter from Click
+
         """
         sio = io.StringIO()
         console = Console(file=sio, force_terminal=True)
@@ -55,11 +63,12 @@ class OrtHwClickGroup(click.Group):
         formatter.write(sio.getvalue())
 
     def format_options(self, ctx: click.Context, formatter: click.HelpFormatter) -> None:
-        """Customization of options output from Click
+        """Customize options output from Click.
 
         Args:
             ctx (click.Context): Click main context
             formatter (click.HelpFormatter): The help formatter from Click
+
         """
         sio = io.StringIO()
         console = Console(file=sio, force_terminal=True)
@@ -130,8 +139,9 @@ class OrtHwClickGroup(click.Group):
         name: str | None = None,
         alias: bool = False,
     ) -> None:
-        """Registers another :class:`Command` with this group.  If the name
-        is not provided, the name of the command is used.
+        """Register another :class:`Command` with this group.
+
+        If the name is not provided, the name of the command is used.
         """
         name = name or cmd.name
 
@@ -143,7 +153,6 @@ class OrtHwClickGroup(click.Group):
         if name is None:
             raise TypeError("Command has no name.")
 
-        _check_multicommand(self, name, cmd, register=True)
         self.commands[name] = cmd
 
     @overload
@@ -161,14 +170,30 @@ class OrtHwClickGroup(click.Group):
         *args: Any,
         **kwargs: Any,
     ) -> Callable[[Callable[..., Any]], click.Command] | click.Command:
+        """Define a Click command decorator within this group.
+
+        This method allows you to create a command as part of this group,
+        optionally specifying additional keyword arguments or a context string.
+        The decorated function will be registered as a Click command.
+
+        Args:
+            *args: Positional arguments passed to the Click command decorator.
+            **kwargs: Keyword arguments passed to the Click command decorator.
+                If 'context' is provided, it will be stored in the command's context settings.
+
+        Returns:
+            Callable[[Callable[..., Any]], click.Command] | click.Command:
+                If used as a decorator, returns a decorator function that registers the command.
+                If used directly, returns the registered Click command.
+
+        """
         from click.decorators import command
 
         func: Callable[..., Any] | None = None
 
         if args and callable(args[0]):
-            assert (  # noqa: S101
-                len(args) == 1 and not kwargs
-            ), "Use 'command(**kwargs)(callable)' to provide arguments."
+            if not len(args) == 1 and not kwargs:
+                raise ValueError("Use 'command(**kwargs)(callable)' to provide arguments.")
             (func,) = args
             args = ()
 
@@ -210,12 +235,30 @@ class OrtHwClickGroup(click.Group):
         *args: Any,
         **kwargs: Any,
     ) -> Callable[[Callable[..., Any]], click.Group] | click.Group | None:
+        """Define a Click command decorator group within this group.
+
+        This method allows you to create a subgroup (nested group) of commands,
+        optionally specifying additional keyword arguments or a context string.
+        The decorated function will be registered as a Click group command.
+
+        Args:
+            *args: Positional arguments passed to the Click group decorator.
+            **kwargs: Keyword arguments passed to the Click group decorator.
+                If 'context' is provided, it will be stored in the command's context settings.
+
+        Returns:
+            Callable[[Callable[..., Any]], click.Group] | click.Group | None:
+                If used as a decorator, returns a decorator function that registers the group.
+                If used directly, returns the registered Click group command.
+
+        """
         from click.decorators import group
 
         func: Callable[..., Any] | None = None
 
         if args and callable(args[0]):
-            assert len(args) == 1 and not kwargs, "Use 'group(**kwargs)(callable)' to provide arguments."  # noqa: S101
+            if not len(args) == 1 and not kwargs:
+                raise ValueError("Use 'group(**kwargs)(callable)' to provide arguments.")
             (func,) = args
             args = ()
 

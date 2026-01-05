@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,6 +24,12 @@ from orthw.utils.required import require_initialized
 
 
 def generate_rule_violation_resolutions() -> None:
+    """Generate resolutions for all unresolved rule violations and add them to the ort.yml file.
+
+    This function prepares the necessary arguments and invokes the external tool to
+    generate rule violation resolutions based on the evaluation result and repository
+    configuration files.
+    """
     require_initialized()
 
     evaluation_result_file: Path = settings.evaluation_result_file
@@ -53,5 +58,5 @@ def generate_rule_violation_resolutions() -> None:
     short_help="Generates resolutions in the ort.yml file for all unresolved rule violations.",
 )
 def __generate_rule_violation_resolutions() -> None:
-    """Generates resolutions in the ort.yml file for all unresolved rule violations."""
+    """Generate resolutions in the ort.yml file for all unresolved rule violations."""
     generate_rule_violation_resolutions()

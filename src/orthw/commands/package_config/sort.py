@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import click
 
@@ -24,6 +23,15 @@ from orthw.utils.required import require_initialized
 
 
 def sort_(package_id: str) -> None:
+    """Sort excludes and curation entries of the package configuration file for the given package id.
+
+    Args:
+        package_id (str): The identifier of the package whose configuration file should be sorted.
+
+    Returns:
+        None
+
+    """
     require_initialized()
 
     package_configuration_file = "FIXME find_package(package_id)"

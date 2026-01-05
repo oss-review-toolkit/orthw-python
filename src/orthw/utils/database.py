@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import sys
 
@@ -28,6 +27,22 @@ from orthw.utils import admin, logging
 
 
 class PostgresConfig(BaseModel):
+    """Configuration model for connecting to a PostgreSQL database.
+
+    This class uses environment variables (via the `settings` module) to populate
+    the connection parameters required for accessing the database. If any required
+    parameter is missing (i.e., set to None), an error is logged and the program exits.
+
+    Attributes:
+        pg_db (str | None): Name of the PostgreSQL database.
+        pg_host (str | None): Host address of the PostgreSQL server.
+        pg_port (str | None): Port number for the PostgreSQL server.
+        pg_schema (str | None): Database schema to use.
+        pg_user (str | None): Username for authentication.
+        pg_password (str | None): Password for authentication.
+
+    """
+
     pg_db: str | None = settings.scandb_db
     pg_host: str | None = settings.scandb_host
     pg_port: str | None = settings.scandb_port
@@ -43,6 +58,15 @@ class PostgresConfig(BaseModel):
 
 
 def query_scandb(sql: Literal) -> list[tuple[str, str]] | None:
+    """Execute a SQL query on the SCANDB PostgreSQL database and return the results.
+
+    Args:
+        sql (Literal): The SQL query to execute, wrapped as a psycopg2.sql.Literal object.
+
+    Returns:
+        list[tuple[str, str]] | None: The query results as a list of tuples, or None if an error occurs.
+
+    """
     if admin():
         logging.error("This script is not allowed to run as admin.")
         sys.exit(1)
@@ -74,6 +98,15 @@ def query_scandb(sql: Literal) -> list[tuple[str, str]] | None:
 
 
 def list_scan_results(package_id: str) -> None:
+    """List scan results for a given package ID.
+
+    Args:
+        package_id (str): The identifier of the package to search for in scan results.
+
+    Returns:
+        None: This function prints the query results using pprint.
+
+    """
     # Prevent SQL injection with literals
     safe_pid = Literal(package_id)
     sql: Literal[str] = Literal(

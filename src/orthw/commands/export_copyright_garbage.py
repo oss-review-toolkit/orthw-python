@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import tempfile
 from pathlib import Path
@@ -29,7 +28,17 @@ from orthw.utils.required import require_initialized
 
 
 def export_copyright_garbage() -> None:
-    """Command export-copyright-garbage"""
+    """Export copyright garbage.
+
+    Export copyright garbage by mapping processed copyright statements to unprocessed ones
+    and importing them into the specified copyright garbage file.
+
+    This function performs the following steps:
+    1. Checks if the required configuration files exist.
+    2. Maps the processed copyright statements to unprocessed ones using the 'orth map-copyrights' command.
+    3. Displays the mapped statements.
+    4. Imports the mapped copyright garbage into the target file using the 'orth import-copyright-garbage' command.
+    """
     require_initialized()
 
     copyrights_file: Path = settings.copyrights_file

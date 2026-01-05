@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from orthw import settings
 from orthw.utils.cmdgroups import command_group
@@ -22,8 +21,12 @@ from orthw.utils.process import run
 
 
 def handled_licenses() -> None:
-    """_summary_"""
+    """List the handled license categories using the ORTH tool.
 
+    This function constructs the appropriate command-line arguments and invokes
+    the ORTH tool to list license categories based on the configured license
+    classifications file.
+    """
     args: list[str] = [
         "orth",
         "list-license-categories",

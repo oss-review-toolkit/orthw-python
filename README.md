@@ -14,7 +14,7 @@ For example:
   - Simplifies common ORT scan review tasks such as clearing found licenses.
   - Offers easy to remember CLI commands (but should you forget, run `orthw` with no arguments to see a complete list).
   - Includes commands to format, sort, clean up and generate ORT config files such as [.ort.yml][ort-yml] and [package configuration][ort-package-configurations].
-  - Is pre-configured to work with the [ort-config] repository allowing you to re-use the work of other ORT users.
+  - Is pre-configured to work with the [ort-config] repository allowing you to reuse the work of other ORT users.
 
 ## Installation
 

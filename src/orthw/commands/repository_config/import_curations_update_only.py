@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,6 +24,12 @@ from orthw.utils.required import require_initialized
 
 
 def import_curations_update_only() -> None:
+    """Import license finding curations from a file to update only existing entries in the ort.yml file.
+
+    This function uses the configured export, scan result, and repository configuration files to
+    update license finding curations in the repository configuration, but only for entries that
+    already exist.
+    """
     require_initialized()
 
     exports_license_finding_curations_file: Path = settings.exports_license_finding_curations_file

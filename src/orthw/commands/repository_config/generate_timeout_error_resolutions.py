@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,6 +24,13 @@ from orthw.utils.required import require_initialized
 
 
 def generate_timeout_error_resolutions() -> None:
+    """Generate resolutions for scanner timeout errors and update the ort.yml file.
+
+    This function prepares the necessary arguments and invokes the external 'orth'
+    command to generate resolutions for timeout errors detected during scanning.
+    It requires the repository to be initialized and uses the configured scan result,
+    repository configuration, and resolutions files.
+    """
     require_initialized()
 
     scan_result_file: Path = settings.scan_result_file
@@ -52,5 +58,5 @@ def generate_timeout_error_resolutions() -> None:
     short_help="Generates resolutions for scanner timeout errors in the ort.yml file.",
 )
 def __generate_timeout_error_resolutions() -> None:
-    """Generates resolutions for scanner timeout errors in the ort.yml file."""
+    """Generate resolutions for scanner timeout errors in the ort.yml file."""
     generate_timeout_error_resolutions()

@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import hashlib
 from enum import Enum
@@ -25,12 +24,20 @@ from orthw.utils import logging
 
 
 class FolderType(Enum):
+    """Enumeration for different types of folders used in the ORTHW project.
+
+    Attributes:
+        CONFIGURATION: Represents the configuration folder type.
+        CURATIONS: Represents the curations folder type.
+
+    """
+
     CONFIGURATION = 1
     CURATIONS = 2
 
 
 def check_evaluation_md5_sum() -> bool:
-    """Checks whether the evaluator inputs changed."""
+    """Check whether the evaluator inputs changed."""
     evaluation_md5_sum_file: Path = settings.evaluation_md5_sum_file
     package_configuration_md5_sum_file: Path = settings.package_configuration_md5_sum_file
     package_curations_md5_sum_file: Path = settings.package_curations_md5_sum_file
@@ -67,14 +74,13 @@ def check_evaluation_md5_sum() -> bool:
 
 
 def get_folder_md5(folder_type: str | FolderType) -> str | None:
-    """_summary_
+    """Return folder MD5 calc.
 
     :param folder_type: Basic enumeration for FDolderType or a direct folder
     :type folder_type: str | FolderType
     :return: md5 value of the directory or None if an invalid value is provided
     :rtype: str | None
     """
-
     folder: Path | None = None
 
     if isinstance(folder_type, FolderType):

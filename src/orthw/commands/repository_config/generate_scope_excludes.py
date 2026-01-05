@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,6 +24,11 @@ from orthw.utils.required import require_initialized
 
 
 def generate_scope_excludes() -> None:
+    """Generate scope excludes in the ort.yml file based on common defaults for supported package managers.
+
+    This function prepares the necessary arguments and invokes the external 'orth' command to update
+    the repository configuration file with generated scope excludes, replacing any existing ones.
+    """
     require_initialized()
 
     scan_result_file: Path = settings.scan_result_file
@@ -53,5 +57,5 @@ def generate_scope_excludes() -> None:
     short_help="Generates scope excludes in the ort.yml file based on common defaults for supported package managers.",
 )
 def __generate_scope_excludes() -> None:
-    """Generates scope excludes in the ort.yml file based on common defaults for supported package managers."""
+    """Generate scope excludes in the ort.yml file based on common defaults for supported package managers."""
     generate_scope_excludes()

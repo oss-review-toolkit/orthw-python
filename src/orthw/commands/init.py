@@ -13,8 +13,7 @@
 # limitations under the License.
 
 # SPDX-License-Identifier: Apache-2.0
-# License-Filename: LICENSE
-from __future__ import annotations
+# License-Filename: LICENSEannotations
 
 import json
 import lzma
@@ -34,6 +33,21 @@ from orthw.utils.process import run
 
 
 def init(target_url: str) -> int | Container:
+    """Initialize the current directory with an ORT result file from the given target URL.
+
+    Downloads and processes the scan result file specified by the target_url, which can be a URL to a .xz,
+    .json, .yml, or .yaml file.
+    The function performs validation on the file extension, retrieves and parses the file, and then
+    uses ORT commands to extract
+    repository configuration and import scan results.
+
+    Args:
+        target_url (str): The URL to the ORT scan result file.
+
+    Returns:
+        int | Container: Returns 1 on error, or the result of the final ORT command execution.
+
+    """
     parsed_url = urlparse(target_url)
     filename: str = Path(parsed_url.path).name
     extension: str = Path(parsed_url.path).suffix

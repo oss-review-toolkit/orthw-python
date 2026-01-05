@@ -14,14 +14,18 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
-from rich import print
 
 from orthw.utils.cmdgroups import command_group
 
 
 def raw_licenses() -> None:
+    """Print the raw licenses information.
+
+    This function is a placeholder for the raw licenses command.
+    Currently, it only prints a message indicating that the command
+    is not implemented yet.
+    """
     print("\n[sandy_brown]This command is not implemented yet.[/sandy_brown]")
 
 

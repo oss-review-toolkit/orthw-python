@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -27,6 +26,20 @@ from orthw.utils.required import require_initialized
 
 
 def create(package_id: str) -> None:
+    """Create a package configuration for the given package ID.
+
+    This function prepares and runs the command to generate a package configuration
+    using the provided package ID. It utilizes various settings such as storage
+    directories, license classification files, and non-offending license categories
+    and IDs. The resulting configuration is stored in the designated output directory.
+
+    Args:
+        package_id (str): The identifier of the package for which to create the configuration.
+
+    Raises:
+        Exception: If the environment is not properly initialized.
+
+    """
     require_initialized()
 
     scan_results_storage_dir: Path = settings.scan_results_storage_dir
@@ -78,5 +91,5 @@ def create(package_id: str) -> None:
 )
 @click.argument("package_id")
 def __create(package_id: str) -> None:
-    """Creates one package configuration for given package id."""
+    """Create one package configuration for given package id."""
     create(package_id=package_id)

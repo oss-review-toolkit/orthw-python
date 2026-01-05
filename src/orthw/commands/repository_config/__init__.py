@@ -14,13 +14,23 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
-from .clean import clean  # noqa: F401
-from .format import format_ as format  # noqa: F401, A001
-from .generate_project_excludes import generate_project_excludes  # noqa: F401
-from .generate_rule_violation_resolutions import generate_rule_violation_resolutions  # noqa: F401
-from .generate_scope_excludes import generate_scope_excludes  # noqa: F401
-from .import_curations import import_curations  # noqa: F401
-from .import_path_excludes import import_path_excludes  # noqa: F401
-from .sort import sort_ as sort  # noqa: F401
+from .clean import clean
+from .format import format_ as format  # noqa: A004
+from .generate_project_excludes import generate_project_excludes
+from .generate_rule_violation_resolutions import generate_rule_violation_resolutions
+from .generate_scope_excludes import generate_scope_excludes
+from .import_curations import import_curations
+from .import_path_excludes import import_path_excludes
+from .sort import sort_ as sort
+
+__all__ = [
+    "clean",
+    "format",
+    "generate_project_excludes",
+    "generate_rule_violation_resolutions",
+    "generate_scope_excludes",
+    "import_curations",
+    "import_path_excludes",
+    "sort",
+]

@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -26,6 +25,17 @@ from orthw.utils.process import run
 
 
 def create_analyzer_results(package_ids_file: Path) -> None:
+    """Create analyzer results for the given package IDs file.
+
+    This function constructs the necessary command-line arguments and invokes the
+    analyzer result creation process using the provided package IDs file. It retrieves
+    the PostgreSQL database configuration and passes the relevant parameters to the
+    analyzer tool.
+
+    Args:
+        package_ids_file (Path): Path to the file containing package IDs.
+
+    """
     # Get database config
     scandb = PostgresConfig()
 

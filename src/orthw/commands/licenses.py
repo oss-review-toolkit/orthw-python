@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import click
 
@@ -25,12 +24,11 @@ from orthw.utils.required import require_initialized
 
 
 def licenses(package_id: str, source_code_dir: str | None = None) -> None:
-    """licenses
+    """Get licenses from a package.
 
     :param package_id: Id of package
     :type package_id: str
     """
-
     require_initialized()
 
     args: list[str] = [
@@ -44,7 +42,7 @@ def licenses(package_id: str, source_code_dir: str | None = None) -> None:
 
     args += ["--ort-file", settings.evaluation_result_file.as_posix()]
     args += ["--repository-configuration-file", settings.repository_configuration_file.as_posix()]
-    args += ["--package-configuration-dir", settings.ort_config_package_configuration_dir.as_posix()]
+    args += ["--package-configuration-dir", settings.ort_config_package_configurations_dir.as_posix()]
 
     if source_code_dir:
         args += ["--source-code-dir", source_code_dir]

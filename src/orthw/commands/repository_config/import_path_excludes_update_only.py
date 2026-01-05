@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -27,6 +26,12 @@ exports_path_excludes_file: Path = settings.exports_path_excludes_file
 
 
 def import_path_excludes_update_only() -> None:
+    """Update only existing path excludes in the repository configuration file.
+
+    By importing them from the specified path excludes file, this function uses the scan result file,
+    repository configuration file, and VCS URL mapping file as inputs, and only updates
+    path excludes that already exist in the configuration.
+    """
     require_initialized()
 
     scan_result_file: Path = settings.scan_result_file
@@ -64,5 +69,5 @@ def import_path_excludes_update_only() -> None:
     ),
 )
 def __import_path_excludes_update_only() -> None:
-    """Imports path excludes by repository from a file into the ort.yml file."""
+    """Import path excludes by repository from a file into the ort.yml file."""
     import_path_excludes_update_only()

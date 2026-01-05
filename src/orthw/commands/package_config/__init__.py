@@ -14,14 +14,25 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
-from .clean import clean  # noqa: F401
-from .create import create  # noqa: F401
-from .export_curations import export_curations  # noqa: F401
-from .export_path_excludes import export_path_excludes  # noqa: F401
-from .find import find as package_find  # noqa: F401
-from .format import format_ as package_format  # noqa: F401
-from .import_curations import import_curations  # noqa: F401
-from .import_path_excludes import import_path_excludes  # noqa: F401
-from .sort import sort_ as package_sort  # noqa: F401
+from .clean import clean
+from .create import create
+from .export_curations import export_curations
+from .export_path_excludes import export_path_excludes
+from .find import find as package_find
+from .format import format_ as package_format
+from .import_curations import import_curations
+from .import_path_excludes import import_path_excludes
+from .sort import sort_ as package_sort
+
+__all__ = [
+    "clean",
+    "create",
+    "export_curations",
+    "export_path_excludes",
+    "package_find",
+    "package_format",
+    "import_curations",
+    "import_path_excludes",
+    "package_sort",
+]

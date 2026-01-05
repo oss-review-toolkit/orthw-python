@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import importlib
 import pkgutil
@@ -30,11 +29,10 @@ from orthw.utils.required import bootstrap_commands
 
 
 class OrtHw:
-    """OrtHw main class"""
+    """OrtHw main class."""
 
     def __init__(self) -> None:
-        """OrtHw command initialization as plugin"""
-
+        """OrtHw command initialization as plugin."""
         # Check if we are in development mode
         # Then add local path to sys.path
         cwd = Path(__file__).parent
@@ -47,10 +45,11 @@ class OrtHw:
                 self.module_import(path)
 
     def module_import(self, path: Path) -> None:
-        """Iterate over the commands directory and import the commands
+        """Iterate over the commands directory and import the commands.
 
         Args:
             path (Path): Start path to iterate
+
         """
         for command in path.iterdir():
             if command.is_file():
@@ -65,7 +64,7 @@ class OrtHw:
                 self.module_import(command)
 
     def run(self) -> int:
-        """Main function call"""
+        """Define main function call."""
         if not bootstrap_commands():
             return 1
         try:
@@ -78,11 +77,15 @@ class OrtHw:
 
     @property
     def commands(self) -> Any:
-        """Return the dynamic commands from plugins"""
+        """Return the dynamic commands from plugins."""
         return command_group().commands()
 
 
 def main() -> int:
+    """Define main entry point for the OrtHw command-line interface.
+
+    Initializes and runs the OrtHw application, returning the exit code.
+    """
     exit_code: int = OrtHw().run()
     return exit_code
 

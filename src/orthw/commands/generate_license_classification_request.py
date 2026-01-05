@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import click
 
@@ -25,6 +24,16 @@ from orthw.utils.cmdgroups import command_group
 
 
 def generate_license_classification_request(license_id: str, stdout: bool = True) -> str:
+    """Generate a license classification request for the given license ID.
+
+    Args:
+        license_id (str): The SPDX license identifier.
+        stdout (bool, optional): If True, print the output to the console. Defaults to True.
+
+    Returns:
+        str: The rendered license classification request as a string.
+
+    """
     # Template data to replace
     data: dict[str, str] = {
         "license_id": license_id,

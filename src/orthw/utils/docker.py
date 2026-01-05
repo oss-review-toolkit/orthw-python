@@ -36,16 +36,19 @@ def _run_in_docker(
     workdir: Path | None = None,
     output_dir: Path | None = None,
 ) -> Container:
-    """_summary_
+    """Run process in docker instance.
 
     Args:
         args (list[str]): Command and arguments
         console_output (bool, optional): If you want to have command output. Defaults to True.
         output_file (Path | None, optional): If the output need to be redirected to a file. Defaults to None.
+        detached (Path | None): Run in detached mode
         workdir (Path | None, optional): Work directory.
         output_dir (Path | None, optional): Output dir is necessary to pass along.
+
     Returns:
         int: result code
+
     """
     mounts: list[Mount] = []
     client = docker.from_env()

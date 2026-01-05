@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,6 +24,12 @@ from orthw.utils.required import require_initialized
 
 
 def import_curations() -> None:
+    """Import license finding curations from the exports file and merges them into the ort.yml file.
+
+    This function retrieves the necessary file paths from the settings, constructs the command-line
+    arguments required to import license finding curations using the 'orth' tool, and executes the command.
+    It ensures that the repository is initialized before proceeding.
+    """
     require_initialized()
 
     exports_license_finding_curations_file: Path = settings.exports_license_finding_curations_file
@@ -59,5 +64,5 @@ def import_curations() -> None:
     ),
 )
 def __import_curations() -> None:
-    """Imports license finding curations from exports file and merges them into the ort.yml file."""
+    """Import license finding curations from exports file and merges them into the ort.yml file."""
     import_curations()

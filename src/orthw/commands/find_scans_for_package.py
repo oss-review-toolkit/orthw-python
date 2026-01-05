@@ -14,11 +14,10 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import click
 from psycopg2.sql import Literal
-from rich import print
+from rich import print as rprint
 from rich.pretty import pprint
 
 from orthw.utils.cmdgroups import command_group
@@ -26,6 +25,16 @@ from orthw.utils.database import list_scan_results, query_scandb
 
 
 def find_scans_for_package(package_id: str) -> None:
+    """Find and display scan results for a given package ID.
+
+    This function lists all scan results associated with the specified package ID,
+    displays the count of results found, prompts the user for confirmation, and
+    deletes the scan results from the database if confirmed.
+
+    Args:
+        package_id (str): The identifier of the package to search for in scan results.
+
+    """
     list_scan_results(package_id=package_id)
 
     count_sql: Literal[str] = Literal(
@@ -34,10 +43,10 @@ def find_scans_for_package(package_id: str) -> None:
     count: list[tuple[str, str]] | None = query_scandb(sql=count_sql)
 
     if not count:
-        print("[bright_yellow]No results were found with this package id.[/bright_yellow]")
+        rprint("[bright_yellow]No results were found with this package id.[/bright_yellow]")
 
-    print(f"[bright_blue]Found the above $count scan results for query string {package_id}.[/bright_blue]")
-    print("[bright_blue]Press enter to delete them.[/bright_blue]")
+    rprint(f"[bright_blue]Found the above $count scan results for query string {package_id}.[/bright_blue]")
+    rprint("[bright_blue]Press enter to delete them.[/bright_blue]")
     input()
 
     delete_sql: Literal[str] = Literal(f"DELETE FROM scan_results WHERE identifier LIKE {package_id}")  # noqa: S608

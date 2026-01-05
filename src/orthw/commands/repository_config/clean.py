@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -28,6 +27,13 @@ from orthw.utils.required import require_initialized
 
 
 def clean(source_code_dir: str) -> None:
+    """Remove all non-matching path and scope excludes as well as rule violation resolutions.
+
+    Args:
+        source_code_dir (str): The path to the source code directory whose non-matching
+            entries should be removed from the ort.yml file.
+
+    """
     require_initialized()
 
     # FIXME implement args to call evaluate
@@ -66,5 +72,5 @@ def clean(source_code_dir: str) -> None:
 )
 @click.argument("source_code_dir")
 def __clean(source_code_dir: str) -> None:
-    "Removes all non-matching entries from the ort.yml file."
+    """Remove all non-matching entries from the ort.yml file."""
     clean(source_code_dir=source_code_dir)

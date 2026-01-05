@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,6 +24,12 @@ from orthw.utils.required import require_initialized
 
 
 def packages() -> None:
+    """List the IDs of packages within the initialized ORT result file.
+
+    This function requires that the ORT workspace has been initialized.
+    It constructs the appropriate command to list package IDs from the
+    scan result file and executes it.
+    """
     require_initialized()
 
     scan_result_file: Path = settings.scan_result_file

@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import sys
 from pathlib import Path
@@ -25,7 +24,7 @@ from orthw.utils import logging
 
 
 def get_template(template: str) -> str:
-    """Try to retrieve the template file from templates dir
+    """Try to retrieve the template file from templates dir.
 
     :param template: Name of the template without extension
     :type template: str
@@ -46,7 +45,7 @@ def get_template(template: str) -> str:
 
 
 def render_txt(template: str, data: dict[str, str]) -> str:
-    """Return a processed txt template
+    """Return a processed txt template.
 
     :param template: Template requested
     :type template: str

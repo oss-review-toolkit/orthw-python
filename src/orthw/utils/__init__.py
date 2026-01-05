@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import ctypes
 import logging as stdlogger
@@ -33,6 +32,12 @@ console = Console()
 
 
 def admin() -> bool:
+    """Check if the current user has administrative (root) privileges.
+
+    Returns:
+        bool: True if the user is running as an administrator (root on Unix, admin on Windows), False otherwise.
+
+    """
     # We not allow run as a root/admin
     try:
         is_admin = os.getuid() == 0

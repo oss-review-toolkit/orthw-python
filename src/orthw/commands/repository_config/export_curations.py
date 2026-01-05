@@ -25,6 +25,12 @@ from orthw.utils.required import require_initialized
 
 
 def export_curations() -> None:
+    """Export the license finding curations from the ort.yml file to a specified output file.
+
+    This function prepares the arguments and invokes the external tool to export license finding
+    curations, mapping repository URLs to their respective curations, using configuration and scan
+    result files defined in the settings.
+    """
     require_initialized()
 
     exports_license_finding_curations_file: Path = settings.exports_license_finding_curations_file

@@ -14,15 +14,20 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
-from rich import print
+from rich import print as rprint
 
 from orthw.utils.cmdgroups import command_group
 
 
 def packages_for_detected_licenses() -> None:
-    print("\n[sandy_brown]This command is not implemented yet.[/sandy_brown]")
+    """Display a list of packages for detected licenses.
+
+    This function is intended to be called by the command-line interface
+    to show which packages correspond to the licenses detected during a scan.
+    Currently, this command is not implemented.
+    """
+    rprint("\n[sandy_brown]This command is not implemented yet.[/sandy_brown]")
 
 
 @command_group.command(

@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,6 +24,7 @@ from orthw.utils.required import require_initialized
 
 
 def format_() -> None:
+    """Format the repository configuration file (ort.yml) using the orth tool."""
     require_initialized()
 
     repository_configuration_file: Path = settings.repository_configuration_file
@@ -48,5 +48,5 @@ def format_() -> None:
     short_help="Formats the ort.yml file.",
 )
 def ___format() -> None:
-    """Formats the ort.yml file."""
+    """Format the ort.yml file."""
     format_()

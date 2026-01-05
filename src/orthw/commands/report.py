@@ -14,15 +14,18 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
-from rich import print
+from rich import print as rprint
 
 from orthw.utils.cmdgroups import command_group
 
 
 def report() -> None:
-    print("\n[sandy_brown]This command is not implemented yet.[/sandy_brown]")
+    """Presents Analyzer, Scanner, and Evaluator results in various formats such as CycloneDX, SPDX, or HTML.
+
+    This function is currently not implemented.
+    """
+    rprint("\n[sandy_brown]This command is not implemented yet.[/sandy_brown]")
 
 
 @command_group.command(
