@@ -41,8 +41,10 @@ class OrtHw:
 
         for module in pkgutil.iter_modules():
             if module.name.startswith("orthw") and hasattr(module.module_finder, "path"):
-                path = Path(module.module_finder.path) / module.name / "commands"  # pyright: ignore
-                self.module_import(path)
+                module_finder_path = getattr(module.module_finder, "path", None)
+                if isinstance(module_finder_path, (str, bytes, Path)):
+                    path = Path(module_finder_path) / module.name / "commands"
+                    self.module_import(path)
 
     def module_import(self, path: Path) -> None:
         """Iterate over the commands directory and import the commands.
