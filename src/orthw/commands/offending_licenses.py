@@ -14,15 +14,18 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
-from rich import print
+from rich import print as rprint
 
 from orthw.utils.cmdgroups import command_group
 
 
 def offending_licenses() -> None:
-    print("\n[sandy_brown]This command is not implemented yet.[/sandy_brown]")
+    """List licenses for which policy violations were found within the initialized ORT result file.
+
+    This function is a placeholder and is not implemented yet.
+    """
+    rprint("\n[sandy_brown]This command is not implemented yet.[/sandy_brown]")
 
 
 @command_group.command(

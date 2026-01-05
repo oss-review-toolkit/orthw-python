@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -27,6 +26,17 @@ from orthw.utils.required import require_initialized
 
 
 def export_curations(package_id: str, source_code_dir: str) -> None:
+    """Export license finding curations for a given package to a specified file.
+
+    Args:
+        package_id (str): The identifier of the package for which to export curations.
+        source_code_dir (str): The path to the source code directory.
+
+    This function prepares and runs the command to export license finding curations,
+    mapping repository URLs to their respective curations, using the provided package ID
+    and source code directory.
+
+    """
     require_initialized()
 
     package_configuration_file = "FIXME find_package(package_id)"
@@ -69,5 +79,5 @@ def export_curations(package_id: str, source_code_dir: str) -> None:
 @click.argument("package_id")
 @click.argument("source_code_dir")
 def __export_curations(package_id: str, source_code_dir: str) -> None:
-    """Exports the license finding curations to a file."""
+    """Export the license finding curations to a file."""
     export_curations(package_id=package_id, source_code_dir=source_code_dir)

@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import subprocess  # nosec
 import sys
@@ -35,7 +34,7 @@ def run(
     output_dir: Path | None = None,
     is_docker: bool = False,
 ) -> int:
-    """Run a process with defined arguments in the proper setting for bare metal or docker
+    """Run a process with defined arguments in the proper setting for bare metal or docker.
 
     Args:
         args (list[str]): Command and arguments
@@ -43,12 +42,12 @@ def run(
         output_file (Path | None, optional): If the output need to be redirected to a file. Defaults to None.
         workdir (Path | None, optional): Work directory.
         output_dir (Path | None, optional): Output dir is necessary to pass along.
-        docker (bool, optional): If the command need to be run inside docker container. Defaults to False.
+        is_docker (bool, optional): If the command need to be run inside docker container. Defaults to False.
 
     Returns:
         int: result code
-    """
 
+    """
     if workdir:
         # We need expand user since docker can't resolve it
         workdir = Path(workdir).expanduser()
@@ -94,7 +93,7 @@ def __run_host(
     workdir: Path | None = None,
     output_dir: Path | None = None,
 ) -> int:
-    """Run the requested command in bare metal
+    """Run the requested command in bare metal.
 
     Args:
         args (list[str]): Command and arguments
@@ -102,8 +101,10 @@ def __run_host(
         output_file (Path | None, optional): If the output need to be redirected to a file. Defaults to None.
         workdir (Path | None, optional): Work directory.
         output_dir (Path | None, optional): Output dir is necessary to pass along.
+
     Returns:
         int: Run status code
+
     """
     if admin():
         logging.error("This script is not allowed to run as admin.")
@@ -127,7 +128,8 @@ def __run_host(
     if output_file:
         try:
             with Path.open(output_file, "w") as f:
-                proc = subprocess.Popen(args, stdout=f)  # noqa: S603
+                # Use shell=False and ensure args is a list of trusted arguments
+                proc = subprocess.Popen(args, stdout=f, shell=False)  # noqa: S603
                 f.close()
         except OSError:
             logging.error(f"Can't open file {output_file} to write.")
@@ -141,7 +143,7 @@ def __run_host(
                     break
                 if output:
                     line = output.decode("utf-8").strip()
-                    # Avoid funny ort log output that ressemble markup closing tag
+                    # Avoid funny ort log output that resemble markup closing tag
                     if "[/" in line:
                         line = line.replace("[", "").replace("]", "")
                     console.print(line, style="bright_white")

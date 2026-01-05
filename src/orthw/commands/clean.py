@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from orthw import settings
 from orthw.utils import logging
@@ -22,8 +21,14 @@ from orthw.utils.cmdgroups import command_group
 
 
 def clean() -> None:
+    """Remove the ORTHW configuration directory and repository configuration file.
+
+    This function deletes the directory specified by `settings.configuration_home`
+    if it exists, and also removes the file specified by
+    `settings.repository_configuration_file` if it exists. Logs actions and errors.
+    """
     try:
-        dot_dir = settings.configdir
+        dot_dir = settings.configuration_home
         if dot_dir and dot_dir.is_dir():
             logging.info(f"Removed directory {dot_dir}")
     except OSError:

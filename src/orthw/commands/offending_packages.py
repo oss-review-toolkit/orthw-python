@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,6 +24,11 @@ from orthw.utils.required import require_initialized
 
 
 def offending_packages() -> None:
+    """List the IDs of packages for which policy violations were found in the initialized ORT result file.
+
+    This function checks that the environment is initialized, retrieves the scan result file path from settings,
+    and runs the 'orth list-packages' command with options to show only offending packages with severity ERROR.
+    """
     require_initialized()
 
     scan_result_file: Path = settings.scan_result_file

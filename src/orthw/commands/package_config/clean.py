@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -27,6 +26,14 @@ from orthw.utils.required import require_initialized
 
 
 def clean(package_id: str) -> None:
+    """Remove all excludes and license finding curations from the package configuration file.
+
+    For the given package ID that do not match any files or license findings.
+
+    Args:
+        package_id (str): The identifier of the package whose configuration should be cleaned.
+
+    """
     require_initialized()
 
     package_configuration_file = "FIXME find_package(package_id)"
@@ -56,5 +63,5 @@ def clean(package_id: str) -> None:
 )
 @click.argument("package_id")
 def __clean(package_id: str) -> None:
-    """Removes all excludes and curations from package configuration file which do not match any findings."""
+    """Remove all excludes and curations from package configuration file which do not match any findings."""
     clean(package_id=package_id)

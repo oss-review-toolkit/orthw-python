@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,6 +24,11 @@ from orthw.utils.required import require_initialized
 
 
 def generate_project_excludes() -> None:
+    """Generate path excludes in the ort.yml file for all definition files which are not yet excluded.
+
+    This function prepares the arguments and invokes the ORT repository-configuration tool to update
+    the repository configuration file with path excludes for any definition files that are not already excluded.
+    """
     require_initialized()
 
     scan_result_file: Path = settings.scan_result_file
@@ -52,5 +56,5 @@ def generate_project_excludes() -> None:
     short_help="Generates path excludes in the ort.yml file for all definition files which are not yet excluded.",
 )
 def ___generate_project_excludes() -> None:
-    """Generates path excludes in the ort.yml file for all definition files which are not yet excluded."""
+    """Generate path excludes in the ort.yml file for all definition files which are not yet excluded."""
     generate_project_excludes()

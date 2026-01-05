@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -27,6 +26,15 @@ from orthw.utils.required import require_initialized
 
 
 def find(package_id: str) -> None:
+    """Search for a package configuration with the given package ID.
+
+    Args:
+        package_id (str): The identifier of the package to search for.
+
+    Returns:
+        None
+
+    """
     require_initialized()
 
     ort_config_package_configurations_dir: Path = settings.ort_config_package_configurations_dir
@@ -61,5 +69,5 @@ def find(package_id: str) -> None:
 )
 @click.argument("package_id")
 def __find(package_id: str) -> None:
-    """Searches ort configuration for a package configurationfors with given package id."""
+    """Search ort configuration for a package configurationfors with given package id."""
     find(package_id=package_id)

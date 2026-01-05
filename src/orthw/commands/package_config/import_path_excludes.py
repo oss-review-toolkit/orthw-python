@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -27,6 +26,15 @@ from orthw.utils.required import require_initialized
 
 
 def import_path_excludes(package_id: str, source_code_dir: str) -> None:
+    """Import path excludes from a specified file into the package configuration file for a given package ID.
+
+    Args:
+        package_id (str): The identifier of the package for which to import path excludes.
+        source_code_dir (str): The directory containing the source code whose path excludes are to be imported.
+
+    This function requires that the environment is initialized before proceeding.
+
+    """
     require_initialized()
 
     package_configuration_file = "FIXME find_package(package_id)"
@@ -68,5 +76,5 @@ def import_path_excludes(package_id: str, source_code_dir: str) -> None:
 @click.argument("package_id")
 @click.argument("source_code_dir")
 def __import_path_excludes(package_id: str, source_code_dir: str) -> None:
-    """Imports path excludes from a file into package configuration file for given package id."""
+    """Import path excludes from a file into package configuration file for given package id."""
     import_path_excludes(package_id=package_id, source_code_dir=source_code_dir)

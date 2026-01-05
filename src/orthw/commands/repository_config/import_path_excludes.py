@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -27,6 +26,12 @@ exports_path_excludes_file: Path = settings.exports_path_excludes_file
 
 
 def import_path_excludes() -> None:
+    """Import path excludes by repository from the specified file into the ort.yml file.
+
+    This function reads the path excludes from the file defined by
+    `exports_path_excludes_file` and imports them into the repository configuration
+    using the ORT command-line tool.
+    """
     require_initialized()
 
     scan_result_file: Path = settings.scan_result_file
@@ -63,5 +68,5 @@ def import_path_excludes() -> None:
     ),
 )
 def __import_path_excludes() -> None:
-    """Imports path excludes by repository from a file into the ort.yml file."""
+    """Import path excludes by repository from a file into the ort.yml file."""
     import_path_excludes()

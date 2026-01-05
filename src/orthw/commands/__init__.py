@@ -14,36 +14,36 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
-from .analyze import analyze  # noqa: F401
-from .check_advisories import check_advisories  # noqa: F401
-from .clean import clean  # noqa: F401
-from .copyrights import copyrights  # noqa: F401
-from .create_analyzer_results import create_analyzer_results  # noqa: F401
-from .delete_scan_results import delete_scan_results  # noqa: F401
-from .evaluate import evaluate  # noqa: F401
-from .find_license_url import find_license_url  # noqa: F401
-from .find_scans_for_package import find_scans_for_package  # noqa: F401
-from .generate_license_classification_request import generate_license_classification_request  # noqa: F401
-from .handled_licenses import handled_licenses  # noqa: F401
-from .handled_licenses_by_category import handled_licenses_by_category  # noqa: F401
-from .init import init  # noqa: F401
-from .licenses import licenses  # noqa: F401
-from .offending_licenses import offending_licenses  # noqa: F401
-from .offending_packages import offending_packages  # noqa: F401
-from .packages import packages  # noqa: F401
-from .packages_for_detected_licenses import packages_for_detected_licenses  # noqa: F401
-from .raw_licenses import raw_licenses  # noqa: F401
-from .scan import scan  # noqa: F401
-from .scan_results import scan_results  # noqa: F401
-from .update import update  # noqa: F401
+from .analyze import analyze
+from .check_advisories import check_advisories
+from .clean import clean
+from .copyrights import copyrights
+from .create_analyzer_results import create_analyzer_results
+from .delete_scan_results import delete_scan_results
+from .evaluate import evaluate
+from .find_license_url import find_license_url
+from .find_scans_for_package import find_scans_for_package
+from .generate_license_classification_request import generate_license_classification_request
+from .handled_licenses import handled_licenses
+from .handled_licenses_by_category import handled_licenses_by_category
+from .init import init
+from .licenses import licenses
+from .offending_licenses import offending_licenses
+from .offending_packages import offending_packages
+from .packages import packages
+from .packages_for_detected_licenses import packages_for_detected_licenses
+from .raw_licenses import raw_licenses
+from .scan import scan
+from .scan_results import scan_results
+from .update import update
 
 __all__ = [
     "analyze",
     "check_advisories",
     "clean",
     "create_analyzer_results",
+    "copyrights",
     "delete_scan_results",
     "evaluate",
     "find_license_url",

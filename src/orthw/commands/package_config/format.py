@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import click
 
@@ -24,6 +23,15 @@ from orthw.utils.required import require_initialized
 
 
 def format_(package_id: str) -> None:
+    """Format the package configuration file for the specified package ID.
+
+    Args:
+        package_id (str): The identifier of the package whose configuration file should be formatted.
+
+    Returns:
+        None
+
+    """
     require_initialized()
 
     package_configuration_file = "FIXME find_package(package_id)"
@@ -54,5 +62,5 @@ def format_(package_id: str) -> None:
 )
 @click.argument("package_id")
 def __format(package_id: str) -> None:
-    """Formats the package configuration file for given package id."""
+    """Format the package configuration file for given package id."""
     format_(package_id=package_id)

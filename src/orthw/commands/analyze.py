@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -40,12 +39,13 @@ def analyze(
     Args:
         workdir (str): Source directory to be analyzed.
         format_ (str, optional): Format of the result output. Defaults to "JSON".
-        output-dir (str | None, optional): Specified output dir or current dir
-        docker (bool, optional): If is runing on docker. Defaults to False.
+        output_dir (str | None, optional): Specified output dir or current dir
+        docker (bool, optional): If is run  ning on docker. Defaults to False.
+
     Returns:
         int | Container: Status code for local runs or Container object for docker runs
-    """
 
+    """
     args: list[str] = [
         "ort",
         "analyze",
@@ -75,7 +75,7 @@ def analyze(
     context="NO_SCAN_CONTEXT",
     name="analyze",
     help="""
-        Runs ORT Analyzer on given source code directory to determine dependencies.
+        Run ORT Analyzer on given source code directory to determine dependencies.
 
         Examples:
 
@@ -89,5 +89,5 @@ def analyze(
 @click.option("--work-dir", type=click.Path(), required=True)
 @click.pass_context
 def __analyze(ctx: click.Context, work_dir: str, format_: str, output_dir: str) -> None:
-    """Runs ORT Analyzer on given source code directory to find used dependencies."""
+    """Run ORT Analyzer on given source code directory to find used dependencies."""
     analyze(workdir=work_dir, format_=format_, output_dir=output_dir, docker=bool("docker" in ctx.obj))

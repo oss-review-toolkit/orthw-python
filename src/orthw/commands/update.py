@@ -14,15 +14,19 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
-from rich import print
+from rich import print as rprint
 
 from orthw.utils.cmdgroups import command_group
 
 
 def update() -> None:
-    print("\n[sandy_brown]This command is not implemented yet.[/sandy_brown]")
+    """Update the ORTHW project or its components.
+
+    This function is intended to handle update operations for the ORTHW project.
+    Currently, it is not implemented.
+    """
+    rprint("\n[sandy_brown]This command is not implemented yet.[/sandy_brown]")
 
 
 @command_group.command()

@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -23,7 +22,7 @@ from yaml_settings_pydantic import BaseYamlSettings, YamlSettingsConfigDict
 
 
 class Settings(BaseYamlSettings):
-    """Base config object. Reads default orthw config file or set default"""
+    """Base config object. Reads default orthw config file or set default."""
 
     ORTHW_CONFIG_DIR: Path = Path(AppDirs("orthw").user_config_dir)
     ORTHW_CONFIG_FILE: Path = Path(AppDirs("orthw").user_config_dir) / "settings.yml"

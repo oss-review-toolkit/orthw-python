@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import logging as stdlogger
 
@@ -31,7 +30,24 @@ from orthw.utils.orthwclickgroup import OrtHwClickGroup
 @click.option("--docker", is_flag=True, default=False, help="Run inside docker container.")
 @click.option("--logfile", required=False, help="Set the log output to specified file.")
 @click.pass_context
-def command_group(ctx: click.Context, debug: bool, docker: bool, logfile: str) -> None:
+def command_group(
+    ctx: click.Context,
+    debug: bool,
+    docker: bool,
+    logfile: str,
+) -> None:
+    """Set main command group for the OrthHW CLI.
+
+    Handles global options such as debug mode, docker mode, and logfile output.
+    Initializes context variables and logging configuration based on user input.
+
+    Args:
+        ctx (click.Context): Click context object.
+        debug (bool): Flag to enable debug mode.
+        docker (bool): Flag to indicate running inside a docker container.
+        logfile (str): Path to the log output file, if specified.
+
+    """
     if debug:
         logging.setLevel(stdlogger.DEBUG)
         if ctx:

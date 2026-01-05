@@ -14,12 +14,12 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from orthw.utils.cmdgroups import command_group
 
 
 def check_advisories() -> None:
+    """Check packages in ORT result for known security vulnerabilities."""
     pass
 
 

@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -38,7 +37,6 @@ def evaluate(
     :param source_code_dir: Source directory to be evaluated
     :type source_code_dir: str
     """
-
     if not Path(ort_file):
         logging.error(f"Path for ort file {ort_file} do not exists. Bailing out.")
         return 1
@@ -62,7 +60,7 @@ def evaluate(
         "--license-classifications-file",
         settings.ort_config_license_classifications_file.as_posix(),
         "--package-configuration-dir",
-        settings.ort_config_package_configuration_dir.as_posix(),
+        settings.ort_config_package_configurations_dir.as_posix(),
     ]
 
     # Execute external run
@@ -84,4 +82,9 @@ def evaluate(
 @click.option("--ort-file", type=click.Path(exists=False), required=True)
 @click.pass_context
 def __evaluate(ctx: click.Context, ort_file: str, format_: str, output_dir: str) -> None:
-    evaluate(ort_file=Path(ort_file), format_=format_, output_dir=output_dir, docker=bool("docker" in ctx.obj))
+    evaluate(
+        ort_file=Path(ort_file),
+        format_=format_,
+        output_dir=output_dir,
+        docker=bool("docker" in ctx.obj),
+    )

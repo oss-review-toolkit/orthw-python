@@ -13,24 +13,35 @@
 # limitations under the License.
 
 # SPDX-License-Identifier: Apache-2.0
-# License-Filename: LICENSE
-from __future__ import annotations
+# License-Filename: LICENSEannotations
 
 import click
-from psycopg2 import sql
-from rich import print
+from psycopg2.sql import Literal
 
 from orthw.utils.cmdgroups import command_group
 from orthw.utils.database import list_scan_results, query_scandb
 
 
 def delete_scan_results(package_id: str) -> None:
+    """Delete scan results from the database for a given package identifier.
+
+    This function lists all scan results associated with the provided package_id,
+    prompts the user for confirmation, and deletes the corresponding records from
+    the scan_results table in the database.
+
+    Args:
+        package_id (str): The identifier of the package whose scan results should be deleted.
+
+    Returns:
+        None
+
+    """
     # Prevent SQL injection assigning as literal
-    safe_pid = sql.Literal(package_id)
+    safe_pid: Literal = Literal(package_id)
 
     list_scan_results(package_id=package_id)
 
-    count_sql: str = f"SELECT COUNT(*) FROM scan_results WHERE identifier LIKE '{safe_pid}'"  # nosec B608  # noqa: S608
+    count_sql: Literal[str] = Literal(f"SELECT COUNT(*) FROM scan_results WHERE identifier LIKE '{safe_pid}'")  # noqa: S608
     count: list[tuple[str, str]] | None = query_scandb(sql=count_sql)
 
     if not count:
@@ -40,7 +51,7 @@ def delete_scan_results(package_id: str) -> None:
     print("[bright_blue]Press enter to delete them.[/bright_blue]")
     input()
 
-    delete_sql: str = f"DELETE FROM scan_results WHERE identifier LIKE {safe_pid}"  # nosec B608  # noqa: S608
+    delete_sql: Literal[str] = Literal(f"DELETE FROM scan_results WHERE identifier LIKE {safe_pid}")  # noqa S608
     query_scandb(sql=delete_sql)
 
 

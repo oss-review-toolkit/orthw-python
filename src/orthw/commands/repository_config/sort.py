@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,6 +24,11 @@ from orthw.utils.required import require_initialized
 
 
 def sort_() -> None:
+    """Sorts alphabetically the excludes and curation entries in the repository configuration file (ort.yml).
+
+    This function invokes the 'orth repository-configuration sort' command on the repository configuration
+    file specified in the settings. It ensures that the repository is initialized before proceeding.
+    """
     require_initialized()
 
     repository_configuration_file: Path = settings.repository_configuration_file

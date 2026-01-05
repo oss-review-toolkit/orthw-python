@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,6 +24,11 @@ from orthw.utils.required import require_initialized
 
 
 def export_path_excludes() -> None:
+    """Export the path excludes from the ort.yml file to a path excludes file.
+
+    This function prepares the necessary arguments and invokes the external 'orth' command
+    to export path excludes, mapping repository URLs to their respective path excludes.
+    """
     require_initialized()
 
     exports_path_excludes_file: Path = settings.exports_path_excludes_file
@@ -59,5 +63,5 @@ def export_path_excludes() -> None:
     short_help="Export the path excludes from the ort.yml to a file.",
 )
 def __export_path_excludes() -> None:
-    """Export the path excludes from the ort.yml to a file"""
+    """Export the path excludes from the ort.yml to a file."""
     export_path_excludes()

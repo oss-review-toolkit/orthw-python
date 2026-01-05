@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -27,6 +26,20 @@ from orthw.utils.required import require_initialized
 
 
 def export_path_excludes(package_id: str, source_code_dir: str) -> None:
+    """Export the path excludes for a given package ID and source code directory.
+
+    This function prepares the arguments and invokes the export of path excludes
+    for the specified package. The exported data maps repository URLs to the path
+    excludes for the respective repository.
+
+    Args:
+        package_id (str): The identifier of the package for which to export path excludes.
+        source_code_dir (str): The directory containing the source code to analyze.
+
+    Returns:
+        None
+
+    """
     require_initialized()
 
     package_configuration_file = "FIXME find_package(package_id)"

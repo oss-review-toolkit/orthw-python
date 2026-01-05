@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -26,6 +25,19 @@ from orthw.utils.cmdgroups import command_group
 
 
 def find_license_url(license_id: str) -> str:
+    """Return a URL to the full text of a license given its SPDX or ScanCode license ID.
+
+    If the license ID starts with "LicenseRef-scancode-", attempts to locate the license
+    file in the ScanCode Toolkit source and returns a GitHub URL pointing to the specific
+    revision of that file. Otherwise, returns the standard SPDX license URL.
+
+    Args:
+        license_id (str): The SPDX or ScanCode license identifier.
+
+    Returns:
+        str: URL to the full license text.
+
+    """
     if license_id.startswith("LicenseRef-scancode-"):
         key = license_id.strip("LicenseRef-scancode-")
         license_file_path = f"src/licensedcode/data/licenses/{key}.LICENSE"

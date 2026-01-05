@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -28,16 +27,20 @@ from orthw.utils.required import require_initialized
 
 
 def copyrights(package_id: str = "") -> None:
-    """OrtHW Command
+    """List the copyright findings within the initialized ORT result file.
 
-    :param package_id: Package ID, defaults to ""
-    :type package_id: str, optional
+    If a package_id is provided, lists copyrights for that specific package.
+    Otherwise, lists copyrights for all packages, using the configured
+    package configuration directory and copyright garbage file.
+
+    Args:
+        package_id (str): Optional. The identifier of the package to filter results by.
+
     """
-
     require_initialized()
 
     ort_config_copyright_garbage_file: Path = settings.ort_config_copyright_garbage_file
-    ort_config_package_configuration_dir: Path = settings.ort_config_package_configuration_dir
+    ort_config_package_configuration_dir: Path = settings.ort_config_package_configurations_dir
     scan_result_file: Path = settings.scan_result_file
 
     if not scan_result_file or not ort_config_package_configuration_dir or not ort_config_copyright_garbage_file:

@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import shutil
 import sys
@@ -27,7 +26,7 @@ required_commands = ["md5sum"]
 
 
 def required_command(command: str) -> str:
-    """Perform a check on system to see if the provided command is available
+    """Perform a check on system to see if the provided command is available.
 
     :param command: Command to ve evaluated on system
     :type command: str
@@ -46,7 +45,7 @@ def required_command(command: str) -> str:
 
 
 def bootstrap_commands() -> bool:
-    """Check the necessry basic commands on start
+    """Check the necessry basic commands on start.
 
     :return: _description_
     :rtype: bool
@@ -55,7 +54,7 @@ def bootstrap_commands() -> bool:
 
 
 def require_initialized() -> None:
-    """Check the base config directories required for operations"""
+    """Check the base config directories required for operations."""
     target_url_file: Path = settings.target_url_file
 
     if target_url_file is None or not target_url_file.is_file():

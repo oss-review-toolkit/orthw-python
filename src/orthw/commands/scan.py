@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
@@ -31,17 +30,18 @@ def scan(
     format_: str = "JSON",
     docker: bool = False,
 ) -> int:
-    """Runs ORT Scanner on given source code directory to detect licenses and copyrights
+    """Run ORT Scanner on given source code directory to detect licenses and copyrights.
 
     Args:
         ort_file (str): Analyzer file.
         format_ (str, optional): Format of the result output. Defaults to "JSON".
-        output_dir (str | None, optional): Specified output dir or cuurent dir
-        docker (bool, optional): If is runing on docker. Defaults to False.
+        output_dir (str | None, optional): Specified output dir or current dir
+        docker (bool, optional): If is running on docker. Defaults to False.
+
     Returns:
         int | Container: Status code for local runs or Container object for docker runs
-    """
 
+    """
     if not Path(ort_file):
         logging.error(f"Path for ort file {ort_file} do not exists. Bailing out.")
         return 1
