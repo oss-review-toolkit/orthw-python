@@ -21,7 +21,7 @@ import click
 from docker.models.containers import Container
 
 from orthw import settings
-from orthw.utils import logging
+from orthw.utils import logger
 from orthw.utils.cmdgroups import command_group
 from orthw.utils.process import run
 
@@ -60,7 +60,7 @@ def analyze(
             args.append("--package-curations-dir")
             args.append(settings.ort_config_package_curations_dir.as_posix())
         else:
-            logging.warning("No curations folder available. Running without curations.")
+            logger.warning("No curations folder available. Running without curations.")
 
     # Execute external run
     return run(

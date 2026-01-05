@@ -15,12 +15,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
 
-import logging as stdlogger
+import logging
 
 import click
 
 from orthw.__version__ import __version__
-from orthw.utils import logging
+from orthw.utils import logger
 from orthw.utils.orthwclickgroup import OrtHwClickGroup
 
 
@@ -49,21 +49,21 @@ def command_group(
 
     """
     if debug:
-        logging.setLevel(stdlogger.DEBUG)
+        logger.setLevel(logging.DEBUG)
         if ctx:
             ctx.obj["debug"] = True
     # Set the operations to run with configured container
     if docker and ctx:
         ctx.obj["docker"] = True
     if logfile:
-        filehandler = stdlogger.FileHandler(
+        filehandler = logging.FileHandler(
             logfile,
             mode="w",
             encoding="UTF-8",
         )
         if debug:
-            filehandler.setLevel(stdlogger.DEBUG)
-        logging.addHandler(filehandler)
+            filehandler.setLevel(logging.DEBUG)
+        logger.addHandler(filehandler)
 
 
 # Subgroup for package config operations

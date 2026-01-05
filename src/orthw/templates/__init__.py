@@ -20,7 +20,7 @@ from pathlib import Path
 
 from jinja2 import Template
 
-from orthw.utils import logging
+from orthw.utils import logger
 
 
 def get_template(template: str) -> str:
@@ -40,7 +40,7 @@ def get_template(template: str) -> str:
             template_file = "\n".join(inputfile.readlines())
         return template_file
     except OSError:
-        logging.error(f"Can't find template file {template}.")
+        logger.error(f"Can't find template file {template}.")
         sys.exit(1)
 
 

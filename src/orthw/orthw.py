@@ -23,7 +23,7 @@ from typing import Any
 
 import click
 
-from orthw.utils import logging
+from orthw.utils import logger
 from orthw.utils.cmdgroups import command_group
 from orthw.utils.required import bootstrap_commands
 
@@ -72,7 +72,7 @@ class OrtHw:
             cli()
             return 0
         except Exception as e:
-            logging.error(f"Error: {e}")
+            logger.error(f"Error: {e}")
             return 1
 
     @property

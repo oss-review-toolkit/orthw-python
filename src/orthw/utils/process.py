@@ -21,7 +21,7 @@ from pathlib import Path
 
 from docker.models.containers import Container
 
-from orthw.utils import admin, console, logging
+from orthw.utils import admin, console, logger
 from orthw.utils.docker import _run_in_docker
 from orthw.utils.required import required_command
 
@@ -51,19 +51,19 @@ def run(
     if workdir:
         # We need expand user since docker can't resolve it
         workdir = Path(workdir).expanduser()
-        logging.debug(f"Work dir: {workdir}")
+        logger.debug(f"Work dir: {workdir}")
         if not workdir.exists():
-            logging.error(f"Work dir {workdir} do not exists. Bailing out.")
+            logger.error(f"Work dir {workdir} do not exists. Bailing out.")
     if output_dir:
         # We need expand user since docker can't resolve it
         output_dir = Path(output_dir).expanduser()
-        logging.debug(f"Output dir: {output_dir}")
+        logger.debug(f"Output dir: {output_dir}")
         if not output_dir.exists():
             # Try create output dir if not exists or fail
             try:
                 output_dir.mkdir(parents=True)
             except OSError:
-                logging.error(f"Can't create output dir {output_dir}. Bailing out.")
+                logger.error(f"Can't create output dir {output_dir}. Bailing out.")
                 sys.exit(1)
 
     if is_docker:
@@ -107,7 +107,7 @@ def __run_host(
 
     """
     if admin():
-        logging.error("This script is not allowed to run as admin.")
+        logger.error("This script is not allowed to run as admin.")
         sys.exit(1)
 
     # Expect first argument be the required command
@@ -123,7 +123,7 @@ def __run_host(
         args.append("--output-dir")
         args.append(output_dir.as_posix())
 
-    logging.debug(f"command line: [bright_green]{' '.join(args)}[/]")
+    logger.debug(f"command line: [bright_green]{' '.join(args)}[/]")
 
     if output_file:
         try:
@@ -132,7 +132,7 @@ def __run_host(
                 proc = subprocess.Popen(args, stdout=f, shell=False)  # noqa: S603
                 f.close()
         except OSError:
-            logging.error(f"Can't open file {output_file} to write.")
+            logger.error(f"Can't open file {output_file} to write.")
             sys.exit(1)
     else:
         proc = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)  # noqa: S603
@@ -149,5 +149,5 @@ def __run_host(
                     console.print(line, style="bright_white")
 
     res = proc.wait()
-    logging.debug(f"Return code: {res}")
+    logger.debug(f"Return code: {res}")
     return res

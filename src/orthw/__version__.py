@@ -15,27 +15,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
 
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
-
-import importlib_metadata as metadata
-
-if TYPE_CHECKING:
-    from collections.abc import Callable
-
-
-# The metadata.version that we import for Python 3.7 is untyped, work around
-# that.
-version: Callable[[str], str] = metadata.version
+from importlib.metadata import PackageNotFoundError, version
 
 try:
-    __version__ = version("orthw")
-except metadata.PackageNotFoundError:
+    __version__ = version("optima")
+except PackageNotFoundError:
     # We are running from a git checkout, so we don't have metada
     from pathlib import Path
 
     import toml
 
     pyproject = toml.loads((Path(__file__).parent.parent.parent / "pyproject.toml").read_text())
-    __version__ = pyproject["tool"]["poetry"]["version"]
+    __version__ = pyproject["project"]["version"]

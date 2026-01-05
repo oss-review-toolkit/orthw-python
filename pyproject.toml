@@ -36,22 +36,23 @@ classifiers = [
 ]
 requires-python = ">=3.13"
 dependencies = [
-    "appdirs>=1.4.4",
     "click>=8.1.8",
     "dict2obj>=1.2.0",
     "docker>=7.1.0",
     "gitpython>=3.1.46",
     "importlib-metadata>=8.5.0",
     "jinja2>=3.1.6",
+    "platformdirs>=4.5.1",
     "psycopg2-binary>=2.9.10",
     "pydantic>=2.10.6",
     "pydantic-settings>=2.8.1",
+    "pydantic-yaml>=1.6.0",
     "python-dotenv>=1.0.1",
     "pyyaml>=6.0.3",
     "requests>=2.32.4",
     "rich>=14.2.0",
     "toml>=0.10.2",
-    "yaml-settings-pydantic>=2.2.0",
+    "tomli-w>=1.2.0",
 ]
 
 [dependency-groups]

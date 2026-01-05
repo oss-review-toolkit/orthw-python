@@ -15,7 +15,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
 
-from __future__ import annotations
 
 import sys
 

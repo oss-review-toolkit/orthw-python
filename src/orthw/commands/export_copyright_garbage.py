@@ -21,7 +21,7 @@ from pathlib import Path
 from rich.pretty import pprint
 
 from orthw import settings
-from orthw.utils import logging
+from orthw.utils import logger
 from orthw.utils.cmdgroups import command_group
 from orthw.utils.process import run
 from orthw.utils.required import require_initialized
@@ -49,10 +49,10 @@ def export_copyright_garbage() -> None:
         or not ort_config_copyright_garbage_file.is_file()
         or not scan_result_file.is_file()
     ):
-        logging.error("Configuration invalid.")
+        logger.error("Configuration invalid.")
         return
 
-    logging.info(f"Exporting from {copyrights_file} to {ort_config_copyright_garbage_file}.")
+    logger.info(f"Exporting from {copyrights_file} to {ort_config_copyright_garbage_file}.")
 
     tmpdir = tempfile.TemporaryDirectory(prefix="orthw_")
     mapped_copyrights_file: Path = Path(tmpdir.name / "copyrights-mapped.txt")  # type: ignore
@@ -69,7 +69,7 @@ def export_copyright_garbage() -> None:
     ]
     run(args=args)
 
-    logging.info("Mapped the given processed statements to the following unprocessed ones:")
+    logger.info("Mapped the given processed statements to the following unprocessed ones:")
     if mapped_copyrights_file.exists():
         with Path.open(mapped_copyrights_file) as f:
             pprint(f.readlines())

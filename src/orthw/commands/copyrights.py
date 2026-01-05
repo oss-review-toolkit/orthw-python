@@ -20,7 +20,7 @@ from pathlib import Path
 import click
 
 from orthw import settings
-from orthw.utils import logging
+from orthw.utils import logger
 from orthw.utils.cmdgroups import command_group
 from orthw.utils.process import run
 from orthw.utils.required import require_initialized
@@ -44,7 +44,7 @@ def copyrights(package_id: str = "") -> None:
     scan_result_file: Path = settings.scan_result_file
 
     if not scan_result_file or not ort_config_package_configuration_dir or not ort_config_copyright_garbage_file:
-        logging.error("Invalid configuration.")
+        logger.error("Invalid configuration.")
         return
 
     args: list[str] = ["orth", "list-copyrights", "--ort-file", scan_result_file.as_posix()]

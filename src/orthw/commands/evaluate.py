@@ -21,7 +21,7 @@ import click
 from docker.models.containers import Container
 
 from orthw import settings
-from orthw.utils import logging
+from orthw.utils import logger
 from orthw.utils.cmdgroups import command_group
 from orthw.utils.process import run
 
@@ -38,7 +38,7 @@ def evaluate(
     :type source_code_dir: str
     """
     if not Path(ort_file):
-        logging.error(f"Path for ort file {ort_file} do not exists. Bailing out.")
+        logger.error(f"Path for ort file {ort_file} do not exists. Bailing out.")
         return 1
     workdir = Path(ort_file).parent.absolute()
 

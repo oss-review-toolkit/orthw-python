@@ -27,7 +27,7 @@ import yaml
 from docker.models.containers import Container
 
 from orthw import settings
-from orthw.utils import logging
+from orthw.utils import logger
 from orthw.utils.cmdgroups import command_group
 from orthw.utils.process import run
 
@@ -52,8 +52,8 @@ def init(target_url: str) -> int | Container:
     filename: str = Path(parsed_url.path).name
     extension: str = Path(parsed_url.path).suffix
 
-    logging.debug(f"filename: {filename}")
-    logging.debug(f"extension: {extension}")
+    logger.debug(f"filename: {filename}")
+    logger.debug(f"extension: {extension}")
 
     evaluation_md5_sum_file: Path = settings.evaluation_md5_sum_file
     if evaluation_md5_sum_file.exists():
@@ -61,17 +61,17 @@ def init(target_url: str) -> int | Container:
 
     # Early check of the file naming and extensions
     if extension not in [".xz", ".json", ".yml", ".yaml"]:
-        logging.error(f"Cannot initialize with the given file {filename}. The file extension is unexpected.")
+        logger.error(f"Cannot initialize with the given file {filename}. The file extension is unexpected.")
         return 1
 
     # Parse and retrieve target scan result file
     if not parsed_url.scheme or parsed_url.scheme not in ["http", "https"] or not parsed_url.netloc:
-        logging.error(f"Can't parse {target_url}.")
+        logger.error(f"Can't parse {target_url}.")
         return 1
 
     response = requests.get(url=target_url, timeout=120)
     if response.status_code != 200:
-        logging.error(f"Can't retrieve {target_url}")
+        logger.error(f"Can't retrieve {target_url}")
         return 1
 
     response_data = lzma.decompress(response.content) if extension == ".xz" else response.content
@@ -89,7 +89,7 @@ def init(target_url: str) -> int | Container:
             with scan_result_file.open("w") as output:
                 json.dump(data, output)
         except OSError:
-            logging.error(f"Cannot open {scan_result_file.as_posix()} to write.")
+            logger.error(f"Cannot open {scan_result_file.as_posix()} to write.")
             return 1
 
         args: list[str] = [

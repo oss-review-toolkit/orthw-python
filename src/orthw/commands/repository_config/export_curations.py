@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 from pathlib import Path
 
