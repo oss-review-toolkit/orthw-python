@@ -23,7 +23,7 @@ from pydantic import BaseModel
 from rich.pretty import pprint
 
 from orthw import settings
-from orthw.utils import admin, logging
+from orthw.utils import admin, logger
 
 
 class PostgresConfig(BaseModel):
@@ -53,7 +53,7 @@ class PostgresConfig(BaseModel):
     def __init__(self) -> None:
         for key, value in self.__dict__.items():
             if value is None:
-                logging.error(f"No env value [bright_white]SCANDB_{key.upper()}[/] !")
+                logger.error(f"No env value [bright_white]SCANDB_{key.upper()}[/] !")
                 sys.exit(1)
 
 
@@ -68,7 +68,7 @@ def query_scandb(sql: Literal) -> list[tuple[str, str]] | None:
 
     """
     if admin():
-        logging.error("This script is not allowed to run as admin.")
+        logger.error("This script is not allowed to run as admin.")
         sys.exit(1)
 
     scandb = PostgresConfig()
@@ -82,8 +82,8 @@ def query_scandb(sql: Literal) -> list[tuple[str, str]] | None:
             port=scandb.pg_port,
         )
     except psycopg2.Error as e:
-        logging.error("Fail to connect to Postgres database.")
-        logging.error(e.diag.message_primary)
+        logger.error("Fail to connect to Postgres database.")
+        logger.error(e.diag.message_primary)
         return None
 
     cursor = conn.cursor()

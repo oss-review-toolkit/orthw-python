@@ -20,7 +20,7 @@ from enum import Enum
 from pathlib import Path
 
 from orthw import settings
-from orthw.utils import logging
+from orthw.utils import logger
 
 
 class FolderType(Enum):
@@ -62,7 +62,7 @@ def check_evaluation_md5_sum() -> bool:
                 with Path.open(Path(filename), mode="rb") as file_:
                     hashlib.md5(file_.read()).hexdigest()  # noqa: S324
             except OSError:
-                logging.error(f"File {filename} not found.")
+                logger.error(f"File {filename} not found.")
                 return False
 
         # Remove package configuration, but why ?
@@ -92,7 +92,7 @@ def get_folder_md5(folder_type: str | FolderType) -> str | None:
         folder = Path(folder_type)
 
     if not folder or not folder.exists():
-        logging.error("No valid entry for folder_type.")
+        logger.error("No valid entry for folder_type.")
         return None
 
     sorted_file_list: list[Path] = sorted(folder.glob("**/*.yml"))
@@ -102,6 +102,6 @@ def get_folder_md5(folder_type: str | FolderType) -> str | None:
         with file.open(mode="rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hashed_file_list.update(chunk)
-            logging.debug(f"{hashed_file_list.hexdigest()}  {file.as_posix()}")
+            logger.debug(f"{hashed_file_list.hexdigest()}  {file.as_posix()}")
 
     return hashed_file_list.hexdigest()

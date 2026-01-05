@@ -14,10 +14,9 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
-from orthw.utils.settings import Settings
+from orthw.utils.settings import Settings, load_settings
 
 """Make config object global
 """
-settings: Settings = Settings()
+settings: Settings = load_settings()

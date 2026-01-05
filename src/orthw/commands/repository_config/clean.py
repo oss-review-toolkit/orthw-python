@@ -20,7 +20,7 @@ from pathlib import Path
 import click
 
 from orthw import settings
-from orthw.utils import logging
+from orthw.utils import logger
 from orthw.utils.cmdgroups import repository_group
 from orthw.utils.process import run
 from orthw.utils.required import require_initialized
@@ -43,7 +43,7 @@ def clean(source_code_dir: str) -> None:
     repository_configuration_file: Path = settings.repository_configuration_file
     ort_config_resolutions_file: Path = settings.ort_config_resolutions_file
 
-    logging.debug(f"source_code_dir: {source_code_dir}")
+    logger.debug(f"source_code_dir: {source_code_dir}")
 
     args: list[str] = [
         "orth",

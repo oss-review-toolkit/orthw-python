@@ -14,28 +14,23 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-
 from pathlib import Path
+from typing import ClassVar
 
-from appdirs import AppDirs
-from yaml_settings_pydantic import BaseYamlSettings, YamlSettingsConfigDict
+import tomli_w
+from platformdirs import user_data_dir
+from pydantic_settings import BaseSettings, PydanticBaseSettingsSource, SettingsConfigDict, TomlConfigSettingsSource
 
 
-class Settings(BaseYamlSettings):
+class Settings(BaseSettings):
     """Base config object. Reads default orthw config file or set default."""
 
-    ORTHW_CONFIG_DIR: Path = Path(AppDirs("orthw").user_config_dir)
-    ORTHW_CONFIG_FILE: Path = Path(AppDirs("orthw").user_config_dir) / "settings.yml"
-
-    try:
-        model_config = YamlSettingsConfigDict(
-            yaml_files=ORTHW_CONFIG_FILE.as_posix(),
-            case_sensitive=True,
-            env_file=(".env", ".env.prod"),
-            extra="allow",
-        )
-    except ValueError as e:
-        print(e)
+    ORTHW_CONFIG_DIR: ClassVar[Path] = Path(user_data_dir("orthw"))
+    ORTHW_CONFIG_FILE: ClassVar[Path] = ORTHW_CONFIG_DIR / "orthwconfig"
+    model_config = SettingsConfigDict(
+        extra="ignore",
+        toml_file=ORTHW_CONFIG_FILE,
+    )
 
     configuration_home: Path = ORTHW_CONFIG_DIR / "ort-config"
     enabled_advisors: str | None = "osv"
@@ -103,3 +98,81 @@ class Settings(BaseYamlSettings):
     spdx_json_report_file: Path = Path("report.spdx.json")
     spdx_yaml_report_file: Path = Path("report.spdx.yml")
     webapp_report_file: Path = Path("webapp.html")
+
+    @classmethod
+    def settings_customise_sources(
+        cls,
+        settings_cls: type[BaseSettings],
+        init_settings: PydanticBaseSettingsSource,
+        env_settings: PydanticBaseSettingsSource,
+        dotenv_settings: PydanticBaseSettingsSource,
+        file_secret_settings: PydanticBaseSettingsSource,
+    ) -> tuple[PydanticBaseSettingsSource, ...]:
+        """Customize the order of settings sources for Pydantic configuration.
+
+        This method overrides the default settings sources to use only the TOML config file
+        specified in the model_config. Other sources such as environment variables, .env files,
+        and file secrets are ignored.
+
+        Args:
+            settings_cls: The settings class being configured.
+            init_settings: Source for settings passed to the initializer.
+            env_settings: Source for settings from environment variables.
+            dotenv_settings: Source for settings from .env files.
+            file_secret_settings: Source for settings from file secrets.
+
+        Returns:
+            A tuple containing only the TomlConfigSettingsSource for the settings class.
+
+        """
+        return (
+            init_settings,
+            TomlConfigSettingsSource(settings_cls),
+            env_settings,
+            dotenv_settings,
+            file_secret_settings,
+        )
+
+
+def load_settings() -> Settings:
+    """Load the application settings from the default configuration file.
+
+    This function ensures that the configuration directory and file exist.
+    If the configuration file does not exist, it creates one with default settings.
+    Finally, it returns an instance of the Settings class loaded from the config file.
+
+    Returns:
+        Settings: An instance of the Settings class with loaded configuration.
+
+    """
+    config_file = Settings.ORTHW_CONFIG_FILE
+    config_dir = config_file.parent
+
+    config_dir.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    if not config_file.exists():
+        _write_default_config(config_file)
+
+    return Settings()
+
+
+def _write_default_config(config_file: Path) -> None:
+    """Create a new config file by dumping the Settings model defaults.
+
+    This MUST NOT read from any existing config sources.
+    """
+    defaults = Settings(
+        model_config=SettingsConfigDict(
+            toml_file=None,
+        )
+    )
+
+    data = defaults.model_dump(
+        mode="json",
+        exclude_none=True,  # optional, usually desirable
+    )
+
+    config_file.write_text(tomli_w.dumps(data))

@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 
 from orthw import settings
-from orthw.utils import logging
+from orthw.utils import logger
 
 required_commands = ["md5sum"]
 
@@ -36,11 +36,11 @@ def required_command(command: str) -> str:
     try:
         cmd = shutil.which(command)
         if not cmd:
-            logging.error(f"Missing required command [bright_yellow]{command}[/].")
+            logger.error(f"Missing required command [bright_yellow]{command}[/].")
             sys.exit(1)
         return cmd
     except shutil.Error as ex:
-        logging.error(f"Something wrong went in the evaluation of {command} executable.\n", ex)
+        logger.error(f"Something wrong went in the evaluation of {command} executable.\n", ex)
         sys.exit(1)
 
 
@@ -58,5 +58,5 @@ def require_initialized() -> None:
     target_url_file: Path = settings.target_url_file
 
     if target_url_file is None or not target_url_file.is_file():
-        logging.error("The working directory is not initialized. Please run 'orthw init <target-url>' first.")
+        logger.error("The working directory is not initialized. Please run 'orthw init <target-url>' first.")
         sys.exit(1)

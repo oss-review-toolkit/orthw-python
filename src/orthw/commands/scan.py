@@ -19,7 +19,7 @@ from pathlib import Path
 
 import click
 
-from orthw.utils import logging
+from orthw.utils import logger
 from orthw.utils.cmdgroups import command_group
 from orthw.utils.process import run
 
@@ -43,11 +43,11 @@ def scan(
 
     """
     if not Path(ort_file):
-        logging.error(f"Path for ort file {ort_file} do not exists. Bailing out.")
+        logger.error(f"Path for ort file {ort_file} do not exists. Bailing out.")
         return 1
     workdir = Path(ort_file).parent.absolute()
 
-    logging.debug(f"Running ort scan on {workdir} with ort file {ort_file} and format {format_}")
+    logger.debug(f"Running ort scan on {workdir} with ort file {ort_file} and format {format_}")
 
     args: list[str] = [
         "ort",

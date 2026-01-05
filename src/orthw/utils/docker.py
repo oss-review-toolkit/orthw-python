@@ -14,7 +14,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
-from __future__ import annotations
 
 import sys
 from pathlib import Path
@@ -24,7 +23,7 @@ from docker.models.containers import Container
 from docker.types import Mount
 
 from orthw import settings
-from orthw.utils import logging
+from orthw.utils import logger
 from orthw.utils.required import required_command
 
 
@@ -60,7 +59,7 @@ def _run_in_docker(
 
     # Mount proper dirs
     real_workdir: Path = workdir if workdir else Path.cwd()
-    logging.debug(f"Mounting [bright_green]{real_workdir}[/bright_green] as /workspace")
+    logger.debug(f"Mounting [bright_green]{real_workdir}[/bright_green] as /workspace")
     mounts.append(Mount("/workspace", real_workdir.as_posix(), type="bind"))
     args = ["/workspace" if entry == real_workdir.as_posix() else entry for entry in args]
 
@@ -75,7 +74,7 @@ def _run_in_docker(
     arguments = " ".join(args)
 
     # Run container with proper mounts and command
-    logging.debug(
+    logger.debug(
         f"Running [bright_green]{docker_image}[/bright_green] container with:\n"
         f"[green]entrypoint:[/green] {entrypoint}\n"
         f"[green]arguments:[/green] {arguments}\n",
