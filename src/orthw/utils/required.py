@@ -25,7 +25,7 @@ from orthw.utils import logger
 required_commands = ["md5sum"]
 
 
-def required_command(command: str) -> str:
+def required_command(command: str) -> str | None:
     """Perform a check on system to see if the provided command is available.
 
     :param command: Command to ve evaluated on system

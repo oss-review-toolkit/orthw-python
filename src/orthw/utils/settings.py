@@ -164,11 +164,8 @@ def _write_default_config(config_file: Path) -> None:
 
     This MUST NOT read from any existing config sources.
     """
-    defaults = Settings(
-        model_config=SettingsConfigDict(
-            toml_file=None,
-        )
-    )
+    # Create a Settings instance without reading from config file
+    defaults = Settings.model_construct()
 
     data = defaults.model_dump(
         mode="json",
